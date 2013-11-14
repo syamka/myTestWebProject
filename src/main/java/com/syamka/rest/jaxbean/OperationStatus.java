@@ -1,9 +1,9 @@
-package com.syamka.hibernate.rest.jaxbean;
+package com.syamka.rest.jaxbean;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Title:
+ * Title: JAX-bean для передачи статуса операции
  * Description:
  * <p/>
  * User: valentina

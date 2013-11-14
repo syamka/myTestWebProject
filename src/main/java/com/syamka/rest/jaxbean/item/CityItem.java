@@ -1,4 +1,4 @@
-package com.syamka.hibernate.rest.jaxbean;
+package com.syamka.rest.jaxbean.item;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigInteger;
@@ -14,8 +14,7 @@ import java.math.BigInteger;
 @XmlRootElement
 public class CityItem extends JqgridResultItem {
 
-    public CityItem() {
-    }
+    public CityItem() {}
 
     public CityItem(BigInteger id, String title, BigInteger region_id, boolean locked) {
         this.id = id;

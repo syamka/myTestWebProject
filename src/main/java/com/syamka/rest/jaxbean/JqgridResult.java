@@ -1,6 +1,7 @@
-package com.syamka.hibernate.rest.jaxbean;
+package com.syamka.rest.jaxbean;
 
-import javax.xml.bind.annotation.XmlAnyElement;
+import com.syamka.rest.jaxbean.item.JqgridResultItem;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -17,11 +18,11 @@ import java.util.List;
  * Caused by: com.sun.xml.bind.v2.runtime.IllegalAnnotationsException: 3 counts of IllegalAnnotationExceptions
  * Class has two properties of the same name "records"
  * this problem is related to the following location:
- * at public int com.syamka.hibernate.rest.jaxbean.JqgridResult.getRecords()
- * at com.syamka.hibernate.rest.jaxbean.JqgridResult
+ * at public int com.syamka.rest.jaxbean.JqgridResult.getRecords()
+ * at com.syamka.rest.jaxbean.JqgridResult
  * this problem is related to the following location:
- * at public int com.syamka.hibernate.rest.jaxbean.JqgridResult.records
- * at com.syamka.hibernate.rest.jaxbean.JqgridResult
+ * at public int com.syamka.rest.jaxbean.JqgridResult.records
+ * at com.syamka.rest.jaxbean.JqgridResult
  *
  * TODO понять, почему
  *

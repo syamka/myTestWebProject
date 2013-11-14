@@ -1,4 +1,6 @@
-package com.syamka.hibernate.rest.jaxbean;
+package com.syamka.rest.jaxbean.item;
+
+import com.syamka.rest.jaxbean.item.JqgridResultItem;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigInteger;
@@ -9,21 +11,23 @@ import java.math.BigInteger;
  * <p/>
  * User: valentina
  * Date: 02.11.13
- * Time: 23:40
+ * Time: 23:35
  */
 @XmlRootElement
-public class TariffScaleItem extends JqgridResultItem {
+public class RegionItem extends JqgridResultItem {
 
-    public TariffScaleItem() {
+    public RegionItem() {
     }
 
-    public TariffScaleItem(BigInteger id, String title) {
+    public RegionItem(BigInteger id, String title, boolean locked) {
         this.id = id;
         this.title = title;
+        this.locked = locked;
     }
 
     public BigInteger id;
     public String title;
+    public Boolean locked;
 
     public void setId(BigInteger id) {
         this.id = id;
@@ -31,5 +35,9 @@ public class TariffScaleItem extends JqgridResultItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

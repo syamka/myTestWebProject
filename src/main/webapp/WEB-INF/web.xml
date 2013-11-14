@@ -15,7 +15,7 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>com.syamka.hibernate.rest</param-value>
+            <param-value>com.syamka.rest</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -24,7 +24,12 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
-
+    <!--
+        Фильтр для Open Session In View - поддержки соединения (EM) на сессию.
+        TODO понять, как с помощью MAVEN разнести конфигурации и включать/выключать его
+    -->
+<!--
+    закомментирован, пока не использую JPA
     <filter>
         <filter-name>interceptor</filter-name>
         <filter-class>com.syamka.filter.PersistenceFilter</filter-class>
@@ -33,7 +38,7 @@
     <filter-mapping>
         <filter-name>interceptor</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
 
 </web-app>

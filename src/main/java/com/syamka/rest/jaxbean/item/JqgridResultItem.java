@@ -1,10 +1,10 @@
-package com.syamka.hibernate.rest.jaxbean;
+package com.syamka.rest.jaxbean.item;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
- * Title:
+ * Title: Базовый класс для передачи в JSON различных объектов
  * Description:
  * <p/>
  * User: valentina
@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlRootElement
 @XmlSeeAlso({
     RegionItem.class,
-    CityItem.class
+    CityItem.class,
+    TariffScaleItem.class
 })
 public class JqgridResultItem {}
