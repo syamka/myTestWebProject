@@ -1,5 +1,7 @@
 package com.syamka.rest.jaxbean.item;
 
+import com.syamka.hibernate.entity.City;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigInteger;
 
@@ -16,16 +18,18 @@ public class CityItem extends JqgridResultItem {
 
     public CityItem() {}
 
-    public CityItem(BigInteger id, String title, BigInteger region_id, boolean locked) {
+    public CityItem(BigInteger id, String title, boolean locked) {
         this.id = id;
         this.title = title;
-        this.region_id = region_id;
         this.locked = locked;
+    }
+
+    public CityItem(City city){
+        this(city.getId(), city.getTitle(), city.isLocked());
     }
 
     public BigInteger id;
     public String title;
-    public BigInteger region_id;
     public boolean locked;
 
     public void setId(BigInteger id) {
@@ -34,10 +38,6 @@ public class CityItem extends JqgridResultItem {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setRegion_id(BigInteger region_id) {
-        this.region_id = region_id;
     }
 
     public void setLocked(boolean locked) {

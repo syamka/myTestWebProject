@@ -12,6 +12,7 @@
      -->
     <persistence-unit name="main" transaction-type="RESOURCE_LOCAL">
         <class>com.syamka.hibernate.entity.Region</class>
+        <class>com.syamka.hibernate.entity.City</class>
         <properties>
             <property name="hibernate.connection.driver_class"
                       value="com.mysql.jdbc.Driver"/>

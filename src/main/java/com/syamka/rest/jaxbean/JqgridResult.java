@@ -2,6 +2,7 @@ package com.syamka.rest.jaxbean;
 
 import com.syamka.rest.jaxbean.item.JqgridResultItem;
 
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 

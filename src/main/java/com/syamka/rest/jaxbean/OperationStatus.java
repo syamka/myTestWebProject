@@ -21,8 +21,18 @@ public class OperationStatus {
         this.message = message;
     }
 
+    public OperationStatus(boolean success, String message, int id){
+        this(success, message);
+        this.id = id;
+    }
+
     public boolean success;
     public String message;
+    public int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setSuccess(boolean success) {
         this.success = success;
@@ -31,4 +41,5 @@ public class OperationStatus {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.syamka.rest.jaxbean.item;
 
-import com.syamka.rest.jaxbean.item.JqgridResultItem;
+
+import com.syamka.hibernate.entity.Region;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigInteger;
@@ -23,6 +24,10 @@ public class RegionItem extends JqgridResultItem {
         this.id = id;
         this.title = title;
         this.locked = locked;
+    }
+
+    public RegionItem(Region entity){
+        this(entity.getId(), entity.getTitle(), entity.isLocked());
     }
 
     public BigInteger id;

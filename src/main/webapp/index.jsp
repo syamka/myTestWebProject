@@ -28,7 +28,7 @@
                     colModel:[
                         {name:'id', align: 'center', width: 100},
                         {name:'title', align: 'center', editable: true},
-                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox'},
+                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }},
                         {name:'delete', align: 'center'}
                     ],
                     pager: '#navDiv',
@@ -93,7 +93,7 @@
                     colModel:[
                         {name:'id', align: 'center', width: 100},
                         {name:'title', align: 'center', editable: true},
-                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox'},
+                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }},
                         {name:'delete', align: 'center'}
                     ],
                     pager: '#cNavDiv',

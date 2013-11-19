@@ -20,8 +20,13 @@ public class Util {
     private static final ThreadLocal<EntityManager> threadLocal;
 
     static {
-        emf = Persistence.createEntityManagerFactory("main");
-        threadLocal = new ThreadLocal<EntityManager>();
+        try{
+            emf = Persistence.createEntityManagerFactory("main");
+            threadLocal = new ThreadLocal<EntityManager>();
+        }
+        catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     public static EntityManager getEm() {

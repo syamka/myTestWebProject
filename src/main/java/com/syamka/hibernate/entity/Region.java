@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity(name="regions")
+@NamedQueries({
+    @NamedQuery(name = "Region.count",
+                query = "SELECT COUNT(r) FROM regions r"),
+    @NamedQuery(name = "Region.countCities",
+                query = "SELECT COUNT(c) FROM cities c WHERE c.region=:region")
+})
 public class Region {
 
     /**
@@ -15,10 +21,14 @@ public class Region {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
     private BigInteger id;
 
     @Column(name="title")
     protected String title;
+
+    @Column(name="locked")
+    protected boolean locked;
 
     public BigInteger getId() {
         return id;
@@ -30,6 +40,14 @@ public class Region {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

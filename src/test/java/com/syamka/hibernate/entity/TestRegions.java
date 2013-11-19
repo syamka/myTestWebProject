@@ -17,12 +17,10 @@ public class TestRegions extends TestEntities {
 
     @Test
     public void test(){
-        insertRandom(5);
+        //insertRandom(10);
         getAll();
         getEntityManager().close();
     }
-
-
     protected void insertRandom(int cnt){
         getEntityManager().getTransaction().begin();
         for(int i=0;i<cnt;i++){
@@ -33,9 +31,20 @@ public class TestRegions extends TestEntities {
         getEntityManager().getTransaction().commit();
     }
 
-
     public void getAll(){
         Query query = getEntityManager().createQuery("SELECT r FROM regions r");
+        for(Region region: (List<Region>)query.getResultList()){
+            System.out.println(region);
+        }
+    }
+
+    public void testQuery(){
+
+        String queryStr = "SELECT r FROM regions r ORDER BY title ASC";
+        Query query = getEntityManager().createQuery(queryStr);
+        //две строчки ниже порождают-таки limit 3,8
+        query.setFirstResult(0);
+        query.setMaxResults(8);
         for(Region region: (List<Region>)query.getResultList()){
             System.out.println(region);
         }
