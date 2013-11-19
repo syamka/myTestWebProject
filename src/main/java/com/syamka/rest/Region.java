@@ -52,7 +52,7 @@ public class Region {
     public OperationStatus editRegion(@PathParam("id") int id,
                                       @QueryParam("title") String title,
                                       @QueryParam("locked") boolean locked){
-        return new OperationStatus(true, "");
+        return new OperationStatus(false, "Ошибко !");
     }
 
     @POST

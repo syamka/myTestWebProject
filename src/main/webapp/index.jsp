@@ -8,17 +8,21 @@
         <script type="text/javascript" src="./js/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
 
-        <link rel="stylesheet" href="./css/ui.jqgrid.css"/>
+
         <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css"/>
+        <link rel="stylesheet" href="./css/ui.jqgrid.css"/>
     </head>
     <body>
 
     <%-- не работают красивые ddUrl /rest/region/REGION_ID/city/edit/CITY_ID--%>
 
         <script type="text/javascript">
+
+            var REGIONS_URL = 'rest/region';
+
             $(document).ready(function(){
                 jQuery("#regions").jqGrid({
-                    url: 'rest/region/list',
+                    url: REGIONS_URL + '/list',
                     datatype: 'json',
                     colNames:['ID', 'Название', 'Заблокирован', 'Удалить'],
                     colModel:[
@@ -42,28 +46,41 @@
                     }
 
                 });
-                <%-- Переопределяем кучу всего, собственно, хотим юзать Rest урлы --%>
-                jQuery("#regions").jqGrid('navGrid',"#navDiv",{edit:false,add:false,del:false,search: false});
-                jQuery("#regions").jqGrid('inlineNav',"#navDiv",{
-                       edit: true,
-                       editicon: "ui-icon-pencil",
-                       add: true,
-                       addicon:"ui-icon-plus",
-                       save: true,
-                       saveicon:"ui-icon-disk",
-                       cancel: true,
-                       cancelicon:"ui-icon-cancel",
-                       addParams : {
-                           keys: true,
-                           url: "rest/region/add"
-                       },
-                       editParams : {
-                           keys: true,
-                           oneditfunc: function(id){
-                               $("#regions").setGridParam({editurl:"rest/region/edit/" + id});
-                           }
-                       }
-                });
+
+                function handleResponse(response, postdata){
+                    var respObj = $.parseJSON(response.responseText);
+                    return [respObj.success == "true", respObj.message, (respObj.id != undefined)?respObj.id:0];
+                }
+
+                <%--
+                    Спасибо этому дядечке !
+                    http://www.javacodegeeks.com/2011/07/jqgrid-rest-ajax-spring-mvc-integration.html
+                --%>
+                var editOptions = {
+                  onclickSubmit: function(params, postdata) {
+                    params.url = REGIONS_URL + '/edit/' + postdata.regions_id;
+                  },
+                  afterSubmit: handleResponse,
+                  reloadAfterSubmit: false
+                };
+                var addOptions = {
+                    mtype: "POST",
+                    onclickSubmit: function(params, postdata) {
+                        params.url = REGIONS_URL + '/add'
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
+                var delOptions = {
+                    onclickSubmit: function(params, postdata) {
+                        params.url = REGIONS_URL + '/delete/' + postdata;
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
+
+                jQuery("#regions").jqGrid('navGrid',"#navDiv",{edit:true,add:true,del:true,search:false},editOptions, addOptions, delOptions);
+
 
                 var currentRegion = 0;
                 function getCurrentRegion(){
@@ -86,36 +103,32 @@
                     height: '100%',
                     width: 600
                 });
-                <%-- Переопределяем кучу всего, собственно, хотим юзать Rest урлы --%>
-                jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:false,add:false,del:false,search: false});
-                jQuery("#cities").jqGrid('inlineNav',"#cNavDiv",{
-                       edit: true,
-                       editicon: "ui-icon-pencil",
-                       add: true,
-                       addicon:"ui-icon-plus",
-                       save: true,
-                       saveicon:"ui-icon-disk",
-                       cancel: true,
-                       cancelicon:"ui-icon-cancel",
-                       addParams:{
-                           addRowParams: {
-                                keys: true,
-                                url: "rest/region/add",
-                                oneditfunc: function(id){
-                                    $("#cities").setGridParam({editurl:"rest/region/"+getCurrentRegion()+"/city/add"});
-                                }
-                            }
-                       },
-                       editParams : {
-                           keys: true,
-                           oneditfunc: function(id){
-                               $("#cities").setGridParam({editurl:"rest/region/"+getCurrentRegion()+"/city/edit/" + id});
-                           }
-                       }
-                });
+
+                var editCityOptions = {
+                  onclickSubmit: function(params, postdata) {
+                    params.url = REGIONS_URL + '/' + getCurrentRegion() + '/city/edit/' + postdata.cities_id;
+                  },
+                  afterSubmit: handleResponse,
+                  reloadAfterSubmit: false
+                };
+                var addCityOptions = {
+                    mtype: "POST",
+                    onclickSubmit: function(params, postdata) {
+                        params.url = REGIONS_URL + '/' + getCurrentRegion() + '/city/add';
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
+                var delCityOptions = {
+                    onclickSubmit: function(params, postdata) {
+                        params.url = REGIONS_URL + '/' + getCurrentRegion() + '/city/delete/' + postdata;
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
 
 
-
+                jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:true,add:true,del:true,search:false},editCityOptions, addCityOptions, delCityOptions);
 
             })
 
