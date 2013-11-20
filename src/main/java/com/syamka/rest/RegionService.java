@@ -31,6 +31,8 @@ public class RegionService {
     @Path(value = "list")
     public JqgridResult<RegionItem> getRegions(@Context UriInfo uriInfo){
         JqgridResponse resp = new JqgridResponse(uriInfo);
+
+        //TODO подумать об унифицированных запросах
         StringBuilder queryStr = new StringBuilder("SELECT r FROM regions r");
         if(!resp.getSidx().isEmpty()){
             queryStr.append(" ORDER BY ").append(resp.getSidx()).append(" ");

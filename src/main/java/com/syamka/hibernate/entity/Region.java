@@ -2,6 +2,7 @@ package com.syamka.hibernate.entity;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity(name="regions")
 @NamedQueries({
@@ -49,6 +50,14 @@ public class Region {
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
+
+    @OneToMany(mappedBy="region", fetch = FetchType.LAZY)
+    protected List<City> cities;
+
+    public List<City> getCities() {
+        return cities;
+    }
+
 
     @Override
     public String toString() {

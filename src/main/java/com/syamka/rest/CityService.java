@@ -38,46 +38,21 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class CityService {
 
-    /**
-     * TODO если у нас только ОДИН город (то же с регионами), массив не упаковывается в [] и jqgrid ничего не понимает
-     *
-     *
-     */
-
     @GET
     @Path(value="/list")
-    public JqgridResult<CityItem> getCities(@Context UriInfo uriInfo,
-                                            @PathParam("region_id") BigInteger region_id){
+    public JqgridResult<CityItem> getCities(@PathParam("region_id") BigInteger region_id){
 
         Region r = Util.getEm().find(Region.class, region_id);
 
-        JqgridResponse resp = new JqgridResponse(uriInfo);
-        StringBuilder queryStr = new StringBuilder("SELECT c FROM cities c WHERE c.region=:region");
-        if(!resp.getSidx().isEmpty()){
-            queryStr.append(" ORDER BY ").append(resp.getSidx()).append(" ");
-            if(!resp.getSord().isEmpty()){
-                queryStr.append(resp.getSord());
-            }
-            else queryStr.append("ASC");
-        }
-
-        Query query = Util.getEm().createQuery(queryStr.toString())
-                                  .setParameter("region", r)
-                                  .setFirstResult(resp.getFirstResult())
-                                  .setMaxResults(resp.getMaxResults());
-        List<City> list = query.getResultList();
-
         List<CityItem> result = new LinkedList<CityItem>();
-        for(City c: list)
+        for(City c: r.getCities())//list)
             result.add(new CityItem(c));
 
-        int cnt = ((Long) Util.getEm().createNamedQuery("Region.countCities").setParameter("region", r).getSingleResult()).intValue();
-        int pages = (int) Math.ceil((cnt + 0.0)/(resp.getRows() + 0.0));
-
+        //выгружаем сразу все города, поэтому постраничка - тривиальна.
         return new JqgridResult<CityItem>(
-                resp.getPage(),
-                cnt,
-                pages,
+                1,
+                result.size(),
+                1,
                 result
         );
     }

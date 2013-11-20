@@ -14,7 +14,11 @@
         <servlet-name>Jersey REST</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <!--
+                org.codehaus.jackson.jaxrs добавлено, т.к. мы хотим использовать jackson реализацию JSON serializator:
+                в частности, она корректно отдает List из одного элемента
+            -->
+            <param-name>com.sun.jersey.config.property.packages;org.codehaus.jackson.jaxrs</param-name>
             <param-value>com.syamka.rest</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

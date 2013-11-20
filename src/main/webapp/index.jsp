@@ -11,6 +11,9 @@
 
         <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css"/>
         <link rel="stylesheet" href="./css/ui.jqgrid.css"/>
+        <style>
+            .ui-jqgrid .ui-jqgrid-btable { cursor : pointer; }
+        </style>
     </head>
     <body>
 
@@ -24,23 +27,24 @@
                 jQuery("#regions").jqGrid({
                     url: REGIONS_URL + '/list',
                     datatype: 'json',
-                    colNames:['ID', 'Название', 'Заблокирован', 'Удалить'],
+                    colNames:['ID', 'Название', 'Заблокирован'],
                     colModel:[
                         {name:'id', align: 'center', width: 100},
                         {name:'title', align: 'center', editable: true},
-                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }},
-                        {name:'delete', align: 'center'}
+                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }}
                     ],
                     pager: '#navDiv',
                     viewrecords: true,
                     caption: 'Регионы',
+                    sortname: 'id',
+                    sortorder: 'asc',
                     rowNum: 10,
                     height: '100%',
                     width: 600,
 
                     onSelectRow: function(ids) {
                         if(ids != null){
-                            jQuery("#cities").jqGrid('setGridParam',{url:"rest/region/" + ids + "/city/list",page:1}).trigger('reloadGrid');;
+                            jQuery("#cities").jqGrid('setGridParam',{url:"rest/region/" + ids + "/city/list",page:1, datatype:'json'}).trigger('reloadGrid');
                             currentRegion = ids;
                         }
                     }
@@ -49,7 +53,7 @@
 
                 function handleResponse(response, postdata){
                     var respObj = $.parseJSON(response.responseText);
-                    return [respObj.success == "true", respObj.message, (respObj.id != undefined)?respObj.id:0];
+                    return [respObj.success, respObj.message, (respObj.id != undefined)?respObj.id:0];
                 }
 
                 <%--
@@ -89,15 +93,19 @@
 
                 jQuery("#cities").jqGrid({
                     datatype: 'json',
-                    colNames:['ID', 'Название', 'Заблокирован', 'Удалить'],
+                    colNames:['ID', 'Название', 'Заблокирован'],
                     colModel:[
                         {name:'id', align: 'center', width: 100},
                         {name:'title', align: 'center', editable: true},
-                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }},
-                        {name:'delete', align: 'center'}
+                        {name:'locked', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }}
                     ],
                     pager: '#cNavDiv',
                     viewrecords: true,
+                    pgbuttons: false,
+                    pgtext: null,
+                    sortname: 'id',
+                    sortorder: 'asc',
+                    loadonce: true,
                     caption: 'Города',
                     rowNum: 10,
                     height: '100%',
@@ -128,19 +136,20 @@
                 };
 
 
-                jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:true,add:true,del:true,search:false},editCityOptions, addCityOptions, delCityOptions);
+                jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:true,add:true,del:true,search:false, refresh:false},editCityOptions, addCityOptions, delCityOptions);
 
             })
 
         </script>
+        <div align="center">
+            <table id="regions"></table>
+            <div id="navDiv"></div>
 
-        <table id="regions"></table>
-        <div id="navDiv"></div>
+            <br/>
 
-        <br/>
-
-        <table id="cities"></table>
-        <div id="cNavDiv"></div>
+            <table id="cities"></table>
+            <div id="cNavDiv"></div>
+        </div>
 
     </body>
 </html>
