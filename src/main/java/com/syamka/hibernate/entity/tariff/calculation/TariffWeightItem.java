@@ -8,6 +8,8 @@
 */
 package com.syamka.hibernate.entity.tariff.calculation;
 
+import com.syamka.hibernate.entity.tariff.DbConstants;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 
@@ -17,7 +19,7 @@ import java.math.BigInteger;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 20.11.13</p>
  */
-@Entity(name="tariff_weight_item")
+@Entity(name= DbConstants.WEIGHT_ITEM_TABLE_NAME)
 public class TariffWeightItem {
 
     @Id
@@ -32,13 +34,21 @@ public class TariffWeightItem {
     @JoinColumn(name="tariff_id")
     protected TariffWeightCalculation tariff;
 
+    public TariffWeightCalculation getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffWeightCalculation tariff) {
+        this.tariff = tariff;
+    }
+
+    @Column( name= DbConstants.ESCAPE_FROM)
     protected double from;
+    @Column(name= DbConstants.ESCAPE_TO)
     protected double to;
     protected double price;
     protected double next;
     protected Type type;
-
-
 
     public double getFrom() {
         return from;
@@ -83,5 +93,10 @@ public class TariffWeightItem {
 
     public enum Type{
         FIX_SUM, BY_WEIGHT
+    }
+
+    @Override
+    public String toString() {
+        return "["+getId()+"] " + from + " - " + to + ": " + price + " (" + type.toString() + ")";
     }
 }

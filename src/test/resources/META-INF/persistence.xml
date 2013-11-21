@@ -10,6 +10,22 @@
     <persistence-unit name="main" transaction-type="RESOURCE_LOCAL">
         <class>com.syamka.hibernate.entity.Region</class>
         <class>com.syamka.hibernate.entity.City</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffCalculation</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffFixCalculation</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffPercentCalculation</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffPercentItem</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffWeightCalculation</class>
+        <class>com.syamka.hibernate.entity.tariff.calculation.TariffWeightItem</class>
+        <class>com.syamka.hibernate.entity.tariff.CourierTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.AdditionalCourierTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.DbConstants</class>
+        <class>com.syamka.hibernate.entity.tariff.InsuranceTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.PickupTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.ReturnTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.RkoTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.Tariff</class>
+        <class>com.syamka.hibernate.entity.tariff.TariffScale</class>
+
         <properties>
             <property name="hibernate.connection.driver_class"
                       value="com.mysql.jdbc.Driver"/>

@@ -9,6 +9,8 @@
 package com.syamka.hibernate.entity.tariff.calculation;
 
 
+import com.syamka.hibernate.entity.tariff.DbConstants;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -18,10 +20,9 @@ import javax.persistence.Entity;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 20.11.13</p>
  */
-@Entity(name="tariff_fix_calc")
+@Entity(name= DbConstants.FIX_CALCULATION_TABLE_NAME)
 public class TariffFixCalculation extends TariffCalculation {
 
-    @Column(name="price")
     protected double price;
 
     public double getPrice() {
@@ -30,5 +31,10 @@ public class TariffFixCalculation extends TariffCalculation {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getId() + "] " + Double.toString(price);
     }
 }

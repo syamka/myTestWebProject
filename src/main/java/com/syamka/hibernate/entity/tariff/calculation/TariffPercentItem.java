@@ -8,6 +8,8 @@
 */
 package com.syamka.hibernate.entity.tariff.calculation;
 
+import com.syamka.hibernate.entity.tariff.DbConstants;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 
@@ -17,7 +19,7 @@ import java.math.BigInteger;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 20.11.13</p>
  */
-@Entity(name="tariff_percent_item")
+@Entity(name= DbConstants.PERCENT_ITEM_TABLE_NAME)
 public class TariffPercentItem {
 
     @Id
@@ -32,7 +34,17 @@ public class TariffPercentItem {
     @JoinColumn(name="tariff_id")
     protected TariffPercentCalculation tariff;
 
+    public TariffPercentCalculation getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffPercentCalculation tariff) {
+        this.tariff = tariff;
+    }
+
+    @Column(name= DbConstants.ESCAPE_FROM)
     protected double from;
+    @Column(name= DbConstants.ESCAPE_TO)
     protected double to;
     protected double percent;
 
@@ -58,5 +70,10 @@ public class TariffPercentItem {
 
     public void setTo(double to) {
         this.to = to;
+    }
+
+    @Override
+    public String toString() {
+        return "["+getId()+"] " + from + " - " + to + ": " + percent + "%";
     }
 }

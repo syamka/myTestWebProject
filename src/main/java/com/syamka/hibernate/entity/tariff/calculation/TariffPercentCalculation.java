@@ -8,6 +8,9 @@
 */
 package com.syamka.hibernate.entity.tariff.calculation;
 
+import com.syamka.hibernate.entity.tariff.DbConstants;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -18,10 +21,10 @@ import java.util.List;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 20.11.13</p>
  */
-@Entity(name="tariff_percent_calc")
+@Entity(name= DbConstants.PERCENT_CALCULATION_TABLE_NAME)
 public class TariffPercentCalculation extends TariffCalculation {
 
-    @OneToMany(mappedBy = "tariff")
+    @OneToMany(mappedBy = "tariff", cascade= CascadeType.PERSIST)
     protected List<TariffPercentItem> items;
 
     public List<TariffPercentItem> getItems() {
@@ -29,6 +32,20 @@ public class TariffPercentCalculation extends TariffCalculation {
     }
 
     public void setItems(List<TariffPercentItem> items) {
+        //Типа проставляем у всех правильный TariffPercentCalculation
+        for(TariffPercentItem item: items)
+            item.setTariff(this);
+
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getId()).append("\n");
+        for(TariffPercentItem item: items)
+            sb.append(item.toString()).append("\n");
+
+        return sb.toString();
     }
 }

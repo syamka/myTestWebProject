@@ -8,6 +8,9 @@
 */
 package com.syamka.hibernate.entity.tariff.calculation;
 
+import com.syamka.hibernate.entity.tariff.DbConstants;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -18,10 +21,10 @@ import java.util.List;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 20.11.13</p>
  */
-@Entity(name="tariff_weight_calc")
+@Entity(name= DbConstants.WEIGHT_CALCULATION_TABLE_NAME)
 public class TariffWeightCalculation extends TariffCalculation {
 
-    @OneToMany(mappedBy = "tariff")
+    @OneToMany(mappedBy = "tariff", cascade= CascadeType.PERSIST)
     protected List<TariffWeightItem> items;
 
     public List<TariffWeightItem> getItems() {
@@ -29,6 +32,19 @@ public class TariffWeightCalculation extends TariffCalculation {
     }
 
     public void setItems(List<TariffWeightItem> items) {
+        for(TariffWeightItem item: items)
+            item.setTariff(this);
+
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getId()).append("\n");
+        for(TariffWeightItem item: items)
+            sb.append(item.toString()).append("\n");
+
+        return sb.toString();
     }
 }
