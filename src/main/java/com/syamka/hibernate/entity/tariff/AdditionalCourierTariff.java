@@ -10,8 +10,7 @@ package com.syamka.hibernate.entity.tariff;
 
 import com.syamka.hibernate.entity.tariff.calculation.TariffWeightCalculation;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * <h3></h3>

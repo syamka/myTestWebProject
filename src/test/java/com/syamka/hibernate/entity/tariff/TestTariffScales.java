@@ -14,6 +14,7 @@ import com.syamka.hibernate.entity.tariff.calculation.*;
 import org.junit.Test;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,120 +25,125 @@ import java.util.List;
  * <p>Date: 21.11.13</p>
  */
 public class TestTariffScales extends TestEntities{
-
     @Test
+    public void getOne(){
+        //City city = getEntityManager().find(City.class, 1);
+        //TariffScale ts = getEntityManager().find(TariffScale.class, 15)
+        BigInteger cityId = BigInteger.valueOf(1);
+        BigInteger tsId = BigInteger.valueOf(15);
+
+        Query query = getEntityManager().createQuery("SELECT t FROM insurance_tariff t WHERE city_id="+cityId+" AND tariff_scale_id="+tsId);
+        System.out.println(query.getSingleResult());
+
+
+    }
+
     public void createFirst(){
+        getEntityManager().getTransaction().begin();
+
         //дефолтовый фиксированный тариф
         TariffFixCalculation fix = new TariffFixCalculation();
         fix.setPrice(200);
+        getEntityManager().persist(fix);
+
+        //дефолтовый весовой тариф
+        TariffWeightCalculation weight = new TariffWeightCalculation();
+        getEntityManager().persist(weight);
 
         //собираем весовой тариф...
-        List<TariffWeightItem> wlist = new LinkedList<TariffWeightItem>();
         TariffWeightItem witem = new TariffWeightItem();
         witem.setFrom(0);
         witem.setTo(5);
         witem.setPrice(200);
         witem.setType(TariffWeightItem.Type.FIX_SUM);
-        wlist.add(witem);
+        witem.setTariff(weight);
+        getEntityManager().persist(witem);
 
         witem = new TariffWeightItem();
         witem.setFrom(5);
         witem.setTo(10);
         witem.setPrice(100);
         witem.setType(TariffWeightItem.Type.FIX_SUM);
-        wlist.add(witem);
+        witem.setTariff(weight);
+        getEntityManager().persist(witem);
 
         witem = new TariffWeightItem();
         witem.setFrom(10);
         witem.setTo(20);
         witem.setPrice(50);
         witem.setType(TariffWeightItem.Type.FIX_SUM);
-        wlist.add(witem);
+        witem.setTariff(weight);
+        getEntityManager().persist(witem);
 
         witem = new TariffWeightItem();
         witem.setFrom(20);
         witem.setPrice(5);
         witem.setType(TariffWeightItem.Type.BY_WEIGHT);
-        wlist.add(witem);
+        witem.setTariff(weight);
+        getEntityManager().persist(witem);
 
-        //дефолтовый весовой тариф
-        TariffWeightCalculation weight = new TariffWeightCalculation();
-        weight.setItems(wlist);
+
+        //дефолтовый процентный тариф
+        TariffPercentCalculation percent = new TariffPercentCalculation();
+        getEntityManager().persist(percent);
 
         //собираем процентный тариф...
-        List<TariffPercentItem> plist = new LinkedList<TariffPercentItem>();
         TariffPercentItem pitem = new TariffPercentItem();
         pitem.setFrom(0);
         pitem.setTo(1000);
         pitem.setPercent(5);
-        plist.add(pitem);
+        pitem.setTariff(percent);
+        getEntityManager().persist(pitem);
 
         pitem = new TariffPercentItem();
         pitem.setFrom(1000);
         pitem.setTo(10000);
         pitem.setPercent(3);
-        plist.add(pitem);
+        pitem.setTariff(percent);
+        getEntityManager().persist(pitem);
 
         pitem = new TariffPercentItem();
         pitem.setFrom(10000);
         pitem.setPercent(1);
-        plist.add(pitem);
+        pitem.setTariff(percent);
+        getEntityManager().persist(pitem);
 
-        //дефолтовый процентный тариф
-        TariffPercentCalculation percent = new TariffPercentCalculation();
-        percent.setItems(plist);
-
-        List<CourierTariff> courierTariffs = new LinkedList<CourierTariff>();
-        List<PickupTariff> pickupTariffs = new LinkedList<PickupTariff>();
-        List<RkoTariff> rkoTariffs = new LinkedList<RkoTariff>();
-        List<ReturnTariff> returnTariffs = new LinkedList<ReturnTariff>();
-        List<AdditionalCourierTariff> additionalCourierTariffs = new LinkedList<AdditionalCourierTariff>();
-        List<InsuranceTariff> insuranceTariffs = new LinkedList<InsuranceTariff>();
-
-        for(City c: getAllCities()){
-            CourierTariff courierTariff = new CourierTariff();
-            courierTariff.setCity(c);
-            courierTariff.setCalculation(weight);
-            courierTariffs.add(courierTariff);
-
-            PickupTariff pickupTariff = new PickupTariff();
-            pickupTariff.setCity(c);
-            pickupTariff.setCalculation(weight);
-            pickupTariffs.add(pickupTariff);
-
-            RkoTariff rkoTariff = new RkoTariff();
-            rkoTariff.setCity(c);
-            rkoTariff.setCalculation(percent);
-            rkoTariffs.add(rkoTariff);
-
-            ReturnTariff returnTariff = new ReturnTariff();
-            returnTariff.setCity(c);
-            returnTariff.setCalculation(weight);
-            returnTariffs.add(returnTariff);
-
-            AdditionalCourierTariff additionalCourierTariff = new AdditionalCourierTariff();
-            additionalCourierTariff.setCity(c);
-            additionalCourierTariff.setCalculation(weight);
-            additionalCourierTariffs.add(additionalCourierTariff);
-
-            InsuranceTariff insuranceTariff = new InsuranceTariff();
-            insuranceTariff.setCity(c);
-            insuranceTariff.setCalculation(fix);
-            insuranceTariffs.add(insuranceTariff);
-        }
-
+        //Создаем ТС (пустую пока)
         TariffScale tariffScale = new TariffScale();
         tariffScale.setTitle("Основная");
         tariffScale.setDescription("Заполнена дефолтовыми значениями, нужна для функционирования системы");
-        tariffScale.setInsuranceTariffs(insuranceTariffs);
-        tariffScale.setAdditionalCourierTariffs(additionalCourierTariffs);
-        tariffScale.setReturnTariffs(returnTariffs);
-        tariffScale.setCourierTariffs(courierTariffs);
-        tariffScale.setPickupTariffs(pickupTariffs);
-        tariffScale.setRkoTariffs(rkoTariffs);
 
-        getEntityManager().getTransaction().begin();
         getEntityManager().persist(tariffScale);
+
+        for(City c: getAllCities()){
+            Tariff[] wtariffs = {
+                    new CourierTariff(),
+                    new PickupTariff(),
+                    new ReturnTariff(),
+                    new AdditionalCourierTariff()
+            };
+
+            for(Tariff tariff: wtariffs){
+                tariff.setCity(c);
+                tariff.setTariffScale(tariffScale);
+                tariff.setCalculation(weight);
+
+                getEntityManager().persist(tariff);
+            }
+
+            RkoTariff rko = new RkoTariff();
+            rko.setCity(c);
+            rko.setCalculation(percent);
+            rko.setTariffScale(tariffScale);
+            getEntityManager().persist(rko);
+
+            InsuranceTariff ins = new InsuranceTariff();
+            ins.setCity(c);
+            ins.setCalculation(fix);
+            ins.setTariffScale(tariffScale);
+            getEntityManager().persist(ins);
+        }
+
         getEntityManager().getTransaction().commit();
     }
 

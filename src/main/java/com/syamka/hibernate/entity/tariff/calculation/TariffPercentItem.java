@@ -30,7 +30,7 @@ public class TariffPercentItem {
         return id;
     }
 
-    @ManyToOne
+    @ManyToOne(targetEntity = TariffPercentCalculation.class)
     @JoinColumn(name="tariff_id")
     protected TariffPercentCalculation tariff;
 

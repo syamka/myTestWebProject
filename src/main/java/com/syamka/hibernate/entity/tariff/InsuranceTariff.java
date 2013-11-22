@@ -12,6 +12,8 @@ import com.syamka.hibernate.entity.tariff.calculation.TariffFixCalculation;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * <h3></h3>

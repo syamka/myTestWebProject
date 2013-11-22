@@ -14,7 +14,11 @@ import java.util.List;
 
 /**
  * <h3></h3>
- * <p></p>
+ * <p>
+ *     Из-за того, что тарифы - полиморфны, возникает проблема, см. http://chriswongdevblog.blogspot.ru/2009/10/polymorphic-one-to-many-relationships.html
+ *     То есть, мы НЕ МОЖЕМ использовать mappedBy и НЕ МОЖЕМ управлять связью ТС - тариф из ТС.
+ *     Это в целом логично, т.к. в принципе нам не нужен список всех тарифов ТС, а только возможность получать нужный тариф по запросу.
+ * </p>
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
  */
@@ -48,68 +52,16 @@ public class TariffScale {
         this.title = title;
     }
 
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<CourierTariff> courierTariffs;
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<PickupTariff> pickupTariffs;
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<RkoTariff> rkoTariffs;
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<ReturnTariff> returnTariffs;
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<AdditionalCourierTariff> additionalCourierTariffs;
-    @OneToMany(mappedBy = "tariffScale", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    protected List<InsuranceTariff> insuranceTariffs;
-
-    public void setAdditionalCourierTariffs(List<AdditionalCourierTariff> additionalCourierTariffs) {
-        for(AdditionalCourierTariff t: additionalCourierTariffs)
-            t.setTariffScale(this);
-        this.additionalCourierTariffs = additionalCourierTariffs;
-    }
-
-    public void setCourierTariffs(List<CourierTariff> courierTariffs) {
-        for(CourierTariff t: courierTariffs)
-            t.setTariffScale(this);
-        this.courierTariffs = courierTariffs;
-    }
-
-    public void setInsuranceTariffs(List<InsuranceTariff> insuranceTariffs) {
-        for(InsuranceTariff t: insuranceTariffs)
-            t.setTariffScale(this);
-
-        this.insuranceTariffs = insuranceTariffs;
-    }
-
-    public void setPickupTariffs(List<PickupTariff> pickupTariffs) {
-        for(PickupTariff t: pickupTariffs)
-            t.setTariffScale(this);
-
-        this.pickupTariffs = pickupTariffs;
-    }
-
-    public void setReturnTariffs(List<ReturnTariff> returnTariffs) {
-        for(ReturnTariff t: returnTariffs)
-            t.setTariffScale(this);
-
-        this.returnTariffs = returnTariffs;
-    }
-
-    public void setRkoTariffs(List<RkoTariff> rkoTariffs) {
-        for(RkoTariff t: rkoTariffs)
-            t.setTariffScale(this);
-
-        this.rkoTariffs = rkoTariffs;
-    }
-
     public TariffScale(){}
 
     public TariffScale(TariffScale model){
-        setCourierTariffs(model.courierTariffs);
+
+/*        setCourierTariffs(model.courierTariffs);
         setPickupTariffs(model.pickupTariffs);
         setRkoTariffs(model.rkoTariffs);
         setReturnTariffs(this.returnTariffs = model.returnTariffs);
         setAdditionalCourierTariffs(model.additionalCourierTariffs);
-        setInsuranceTariffs(model.insuranceTariffs);
+        setInsuranceTariffs(model.insuranceTariffs);*/
     }
 
 

@@ -30,7 +30,7 @@ public class TariffWeightItem {
         return id;
     }
 
-    @ManyToOne
+    @ManyToOne(targetEntity = TariffWeightCalculation.class)
     @JoinColumn(name="tariff_id")
     protected TariffWeightCalculation tariff;
 

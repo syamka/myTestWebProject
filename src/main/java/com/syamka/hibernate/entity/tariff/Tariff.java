@@ -16,13 +16,15 @@ import java.math.BigInteger;
 
 /**
  * <h3></h3>
- * <p></p>
+ * <p>
+ *     Если убрать параметризацию, то все тарифы смогут быть любого типа, т.е., например:
+ *     тариф на курьерку в Москве - по весу, в Питере - по проценту от суммы
+ * </p>
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
  */
-@MappedSuperclass
+@Entity(name = "tariff")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Table(name = "tariff")
 @DiscriminatorColumn(name="type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Tariff<T extends TariffCalculation> {
 
@@ -38,7 +40,7 @@ public abstract class Tariff<T extends TariffCalculation> {
     @JoinColumn(name = "city_id")
     protected City city;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "calculation_id")
     protected T calculation;
 
@@ -68,5 +70,10 @@ public abstract class Tariff<T extends TariffCalculation> {
 
     public void setTariffScale(TariffScale tariffScale) {
         this.tariffScale = tariffScale;
+    }
+
+    @Override
+    public String toString() {
+        return calculation.toString();
     }
 }

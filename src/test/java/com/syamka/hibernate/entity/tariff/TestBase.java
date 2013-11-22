@@ -71,6 +71,8 @@ public class TestBase extends TestEntities {
 
 
     private TariffWeightCalculation getRandomWeight(){
+        TariffWeightCalculation calculation = new TariffWeightCalculation();
+
         List<TariffWeightItem> list = new LinkedList<TariffWeightItem>();
         for(int i=0; i<3; i++){
             TariffWeightItem item = new TariffWeightItem();
@@ -78,6 +80,7 @@ public class TestBase extends TestEntities {
             item.setTo(item.getFrom() + Math.random() * 50);
             item.setPrice(Math.random() * 100);
             item.setType(TariffWeightItem.Type.FIX_SUM);
+            item.setTariff(calculation);
 
             list.add(item);
         }
@@ -87,14 +90,14 @@ public class TestBase extends TestEntities {
         item.setPrice(Math.random() * 100);
         item.setNext(Math.random() * 10);
         item.setType(TariffWeightItem.Type.BY_WEIGHT);
+        item.setTariff(calculation);
         list.add(item);
 
-        TariffWeightCalculation calculation = new TariffWeightCalculation();
-        calculation.setItems(list);
         return calculation;
     }
 
     private TariffPercentCalculation getRandomPercent(){
+        TariffPercentCalculation calculation = new TariffPercentCalculation();
         List<TariffPercentItem> list = new LinkedList<TariffPercentItem>();
 
         for(int i=0; i<3; i++){
@@ -102,11 +105,10 @@ public class TestBase extends TestEntities {
             item.setFrom(Math.random() * 100);
             item.setTo(item.getFrom() + Math.random() * 50);
             item.setPercent(Math.random() * 100);
+            item.setTariff(calculation);
 
             list.add(item);
         }
-        TariffPercentCalculation calculation = new TariffPercentCalculation();
-        calculation.setItems(list);
         return calculation;
 
     }

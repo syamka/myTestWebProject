@@ -24,19 +24,11 @@ import java.util.List;
 @Entity(name= DbConstants.PERCENT_CALCULATION_TABLE_NAME)
 public class TariffPercentCalculation extends TariffCalculation {
 
-    @OneToMany(mappedBy = "tariff", cascade= CascadeType.PERSIST)
+    @OneToMany(mappedBy = "tariff")
     protected List<TariffPercentItem> items;
 
     public List<TariffPercentItem> getItems() {
         return items;
-    }
-
-    public void setItems(List<TariffPercentItem> items) {
-        //Типа проставляем у всех правильный TariffPercentCalculation
-        for(TariffPercentItem item: items)
-            item.setTariff(this);
-
-        this.items = items;
     }
 
     @Override
