@@ -6,12 +6,9 @@
 * Данные исходные коды не могут использоваться и быть изменены
 * без официального разрешения компании i-Teco.          
 */
-package com.syamka.hibernate.entity.tariff;
+package com.syamka.hibernate.entity.tariff.weight;
 
-import com.syamka.hibernate.entity.tariff.calculation.TariffWeightCalculation;
-
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * <h3></h3>
@@ -19,6 +16,7 @@ import javax.persistence.Entity;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
  */
-@Entity(name = "courier_tariff")
-@DiscriminatorValue(value = "COURIER")
-public class CourierTariff extends Tariff<TariffWeightCalculation> {}
+@Entity(name = "additional_courier_tariff")
+@DiscriminatorValue(value = "ADDITIONAL_COURIER")
+public class AdditionalCourierTariff extends WeightTariff {
+}

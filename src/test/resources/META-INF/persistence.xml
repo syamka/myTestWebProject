@@ -16,13 +16,13 @@
         <class>com.syamka.hibernate.entity.tariff.calculation.TariffPercentItem</class>
         <class>com.syamka.hibernate.entity.tariff.calculation.TariffWeightCalculation</class>
         <class>com.syamka.hibernate.entity.tariff.calculation.TariffWeightItem</class>
-        <class>com.syamka.hibernate.entity.tariff.CourierTariff</class>
-        <class>com.syamka.hibernate.entity.tariff.AdditionalCourierTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.weight.CourierTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.weight.AdditionalCourierTariff</class>
         <class>com.syamka.hibernate.entity.tariff.DbConstants</class>
-        <class>com.syamka.hibernate.entity.tariff.InsuranceTariff</class>
-        <class>com.syamka.hibernate.entity.tariff.PickupTariff</class>
-        <class>com.syamka.hibernate.entity.tariff.ReturnTariff</class>
-        <class>com.syamka.hibernate.entity.tariff.RkoTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.fix.InsuranceTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.weight.PickupTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.weight.ReturnTariff</class>
+        <class>com.syamka.hibernate.entity.tariff.percent.RkoTariff</class>
         <class>com.syamka.hibernate.entity.tariff.Tariff</class>
         <class>com.syamka.hibernate.entity.tariff.TariffScale</class>
 

@@ -11,11 +11,15 @@ package com.syamka.hibernate.entity.tariff;
 import com.syamka.hibernate.entity.City;
 import com.syamka.hibernate.entity.TestEntities;
 import com.syamka.hibernate.entity.tariff.calculation.*;
+import com.syamka.hibernate.entity.tariff.fix.InsuranceTariff;
+import com.syamka.hibernate.entity.tariff.percent.RkoTariff;
+import com.syamka.hibernate.entity.tariff.weight.*;
 import org.junit.Test;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigInteger;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -25,17 +29,26 @@ import java.util.List;
  * <p>Date: 21.11.13</p>
  */
 public class TestTariffScales extends TestEntities{
-    @Test
+
+
     public void getOne(){
         //City city = getEntityManager().find(City.class, 1);
         //TariffScale ts = getEntityManager().find(TariffScale.class, 15)
         BigInteger cityId = BigInteger.valueOf(1);
-        BigInteger tsId = BigInteger.valueOf(15);
+        BigInteger tsId = BigInteger.valueOf(1);
 
-        Query query = getEntityManager().createQuery("SELECT t FROM insurance_tariff t WHERE city_id="+cityId+" AND tariff_scale_id="+tsId);
+        Query query = getEntityManager().createQuery("SELECT t FROM courier_tariff t WHERE city_id="+cityId+" AND tariff_scale_id="+tsId);
         System.out.println(query.getSingleResult());
 
+    }
 
+    @Test
+    public void getOneFromQuery(){
+        Query query = getEntityManager().createNamedQuery("Tariff.get")
+                                        .setParameter("city", getEntityManager().find(City.class, BigInteger.valueOf(1)))
+                                        .setParameter("tariffScale", getEntityManager().find(TariffScale.class, BigInteger.valueOf(1)))
+                                        .setParameter("class", InsuranceTariff.class.getAnnotation(DiscriminatorValue.class).value());
+        System.out.println(query.getSingleResult());
     }
 
     public void createFirst(){
@@ -116,14 +129,14 @@ public class TestTariffScales extends TestEntities{
         getEntityManager().persist(tariffScale);
 
         for(City c: getAllCities()){
-            Tariff[] wtariffs = {
+            WeightTariff[] wtariffs = {
                     new CourierTariff(),
                     new PickupTariff(),
                     new ReturnTariff(),
                     new AdditionalCourierTariff()
             };
 
-            for(Tariff tariff: wtariffs){
+            for(WeightTariff tariff: wtariffs){
                 tariff.setCity(c);
                 tariff.setTariffScale(tariffScale);
                 tariff.setCalculation(weight);

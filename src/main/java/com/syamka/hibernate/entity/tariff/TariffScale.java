@@ -13,7 +13,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * <h3></h3>
+ * <h3>Класс entity тарифной сетки</h3>
  * <p>
  *     Из-за того, что тарифы - полиморфны, возникает проблема, см. http://chriswongdevblog.blogspot.ru/2009/10/polymorphic-one-to-many-relationships.html
  *     То есть, мы НЕ МОЖЕМ использовать mappedBy и НЕ МОЖЕМ управлять связью ТС - тариф из ТС.
@@ -22,7 +22,7 @@ import java.util.List;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
  */
-@Entity(name="tariff_scale")
+@Entity(name= DbConstants.TARIFF_SCALE_TABLE_NAME)
 public class TariffScale {
 
     @Id
@@ -53,16 +53,5 @@ public class TariffScale {
     }
 
     public TariffScale(){}
-
-    public TariffScale(TariffScale model){
-
-/*        setCourierTariffs(model.courierTariffs);
-        setPickupTariffs(model.pickupTariffs);
-        setRkoTariffs(model.rkoTariffs);
-        setReturnTariffs(this.returnTariffs = model.returnTariffs);
-        setAdditionalCourierTariffs(model.additionalCourierTariffs);
-        setInsuranceTariffs(model.insuranceTariffs);*/
-    }
-
 
 }

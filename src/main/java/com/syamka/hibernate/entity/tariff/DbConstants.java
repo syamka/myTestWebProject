@@ -9,7 +9,7 @@
 package com.syamka.hibernate.entity.tariff;
 
 /**
- * <h3></h3>
+ * <h3>Константы для persistence</h3>
  * <p></p>
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
@@ -25,6 +25,10 @@ public interface DbConstants {
     public static final String WEIGHT_ITEM_TABLE_NAME = "tariff_weight_item";
 
     public static final String PERCENT_ITEM_TABLE_NAME = "tariff_percent_item";
+
+    public static final String TARIFF_TABLE_NAME = "tariff";
+
+    public static final String TARIFF_SCALE_TABLE_NAME = "tariff_scale";
 
     public static final String ESCAPE_FROM = "`from`";
     public static final String ESCAPE_TO = "`to`";

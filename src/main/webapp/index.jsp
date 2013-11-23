@@ -17,8 +17,6 @@
     </head>
     <body>
 
-    <%-- не работают красивые ddUrl /rest/region/REGION_ID/city/edit/CITY_ID--%>
-
         <script type="text/javascript">
 
             var REGIONS_URL = 'rest/region';
@@ -138,6 +136,10 @@
 
                 jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:true,add:true,del:true,search:false, refresh:false},editCityOptions, addCityOptions, delCityOptions);
 
+
+
+
+
             })
 
         </script>
@@ -149,6 +151,12 @@
 
             <table id="cities"></table>
             <div id="cNavDiv"></div>
+
+            <br />
+
+            <table id="tariffScales"></table>
+            <div id="tsNavDiv"></div>
+
         </div>
 
     </body>

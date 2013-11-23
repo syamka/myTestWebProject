@@ -52,7 +52,7 @@ public class RegionService {
             result.add(new RegionItem(r));
 
         int cnt = ((Long) Util.getEm().createNamedQuery("Region.count").getSingleResult()).intValue();
-        int pages = (int) Math.ceil(cnt/resp.getRows());
+        int pages = (int) Math.ceil((cnt + 0.0)/resp.getRows());
 
         return new JqgridResult<RegionItem>(
                 resp.getPage(),

@@ -6,14 +6,10 @@
 * Данные исходные коды не могут использоваться и быть изменены
 * без официального разрешения компании i-Teco.          
 */
-package com.syamka.hibernate.entity.tariff;
-
-import com.syamka.hibernate.entity.tariff.calculation.TariffFixCalculation;
+package com.syamka.hibernate.entity.tariff.weight;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  * <h3></h3>
@@ -21,7 +17,7 @@ import javax.persistence.ManyToOne;
  * <p>Author: predtechenskaya (predtechenskaya@i-teco.ru)</p>
  * <p>Date: 21.11.13</p>
  */
-@Entity(name = "insurance_tariff")
-@DiscriminatorValue(value = "INSURANCE")
-public class InsuranceTariff extends Tariff<TariffFixCalculation> {
+@Entity(name = "pickup_tariff")
+@DiscriminatorValue(value = "PICKUP")
+public class PickupTariff extends WeightTariff {
 }

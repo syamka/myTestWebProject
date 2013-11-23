@@ -6,9 +6,7 @@
 * Данные исходные коды не могут использоваться и быть изменены
 * без официального разрешения компании i-Teco.          
 */
-package com.syamka.hibernate.entity.tariff;
-
-import com.syamka.hibernate.entity.tariff.calculation.TariffPercentCalculation;
+package com.syamka.hibernate.entity.tariff.percent;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -21,5 +19,5 @@ import javax.persistence.Entity;
  */
 @Entity(name = "rko_tariff")
 @DiscriminatorValue(value = "RKO")
-public class RkoTariff extends Tariff<TariffPercentCalculation> {
+public class RkoTariff extends PercentTariff {
 }
