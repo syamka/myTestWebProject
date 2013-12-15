@@ -19,6 +19,7 @@
 
         <script type="text/javascript">
 
+            <!-- РЕГИОНЫ -->
             var REGIONS_URL = 'rest/region';
 
             $(document).ready(function(){
@@ -89,6 +90,7 @@
                     return currentRegion;
                 }
 
+                <!-- ГОРОДА -->
                 jQuery("#cities").jqGrid({
                     datatype: 'json',
                     colNames:['ID', 'Название', 'Заблокирован'],
@@ -136,9 +138,55 @@
 
                 jQuery("#cities").jqGrid('navGrid',"#cNavDiv",{edit:true,add:true,del:true,search:false, refresh:false},editCityOptions, addCityOptions, delCityOptions);
 
+                <!-- ТАРИФНЫЕ СЕТКИ -->
+                var TARIFF_SCALES_URL = 'rest/scale'
 
+                jQuery("#tariffScales").jqGrid({
+                    datatype: 'json',
+                    url: TARIFF_SCALES_URL + "/list",
+                    colNames:['ID', 'Название', 'Описание', 'Главная'],
+                    colModel:[
+                        {name:'id', align: 'center', width: 100},
+                        {name:'title', align: 'center', editable: true},
+                        {name:'description', align: 'left', editable: true, width: 500},
+                        {name:'main', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }}
+                    ],
+                    pager: '#tsNavDiv',
+                    viewrecords: true,
+                    pgbuttons: false,
+                    pgtext: null,
+                    sortname: 'id',
+                    sortorder: 'asc',
+                    caption: 'Тарифные сетки',
+                    rowNum: 10,
+                    height: '100%',
+                    width: 1000
+                });
 
+                var editTsOptions = {
+                    onclickSubmit: function(params, postdata) {
+                        params.url = TARIFF_SCALES_URL + '/edit/' + postdata.tariffScales_id;
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
+                var addTsOptions = {
+                    mtype: "POST",
+                    onclickSubmit: function(params, postdata) {
+                        params.url = TARIFF_SCALES_URL + '/add';
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
+                var delTsOptions = {
+                    onclickSubmit: function(params, postdata) {
+                        params.url = TARIFF_SCALES_URL + '/delete/' + postdata;
+                    },
+                    afterSubmit: handleResponse,
+                    reloadAfterSubmit: false
+                };
 
+                jQuery("#tariffScales").jqGrid('navGrid',"#tsNavDiv",{edit:true,add:true,del:true,search:false, refresh:false},editTsOptions, addTsOptions, delTsOptions);
 
             })
 

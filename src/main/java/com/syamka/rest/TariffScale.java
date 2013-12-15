@@ -13,6 +13,7 @@ import com.syamka.rest.jaxbean.OperationStatus;
 import com.syamka.rest.jaxbean.item.TariffScaleItem;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 
 @Path(value = "scale")
+@Produces(MediaType.APPLICATION_JSON)
 public class TariffScale {
 
     @GET
@@ -48,7 +50,7 @@ public class TariffScale {
     @POST
     @Path(value="/add")
     public OperationStatus addScale(@QueryParam("title") String title){
-        return new OperationStatus(true, "");
+        return new OperationStatus(true, "", 123);
     }
 
     @POST
