@@ -35,6 +35,7 @@ public class TariffScale {
 
     protected String title;
     protected String description;
+    protected boolean main;
 
     public String getDescription() {
         return description;
@@ -50,6 +51,14 @@ public class TariffScale {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isMain() {
+        return main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
     }
 
     public TariffScale(){}
