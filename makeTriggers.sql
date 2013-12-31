@@ -5,7 +5,7 @@ DELIMITER |
 CREATE TRIGGER `create_ts` AFTER INSERT ON `tariff_scale`
 FOR EACH ROW 
 BEGIN
-   INSERT INTO tariff
+   INSERT INTO tariff (tariff_scale_id, city_id, calculation_id, type)
         SELECT NEW.id, city_id, calculation_id, type
           FROM tariff
           JOIN tariff_scale ON(tariff.tariff_scale_id = tariff_scale.id)
@@ -39,4 +39,19 @@ END |
 CREATE TRIGGER `delete_city` BEFORE DELETE ON `cities`
 FOR EACH ROW BEGIN
   DELETE FROM tariff WHERE city_id=OLD.id;
-END;
+END/* |
+
+
+DELIMITER |
+CREATE TRIGGER `new_main_ts` AFTER UPDATE ON `tariff_scale`
+FOR EACH ROW
+BEGIN
+  IF (
+      NOT OLD.main=NEW.main
+        AND
+      NEW.main = TRUE
+  )
+  THEN UPDATE `tariff_scale` SET main=FALSE WHERE NOT id=NEW.id;
+  END IF;
+END;*/
+

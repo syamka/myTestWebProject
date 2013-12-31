@@ -23,18 +23,27 @@ import java.util.List;
  * <p>Date: 21.11.13</p>
  */
 @Entity(name= DbConstants.TARIFF_SCALE_TABLE_NAME)
+@NamedQueries({
+        @NamedQuery(name="TariffScale.count", query = "SELECT COUNT(ts) FROM tariff_scale ts"),
+        @NamedQuery(name="TariffScale.main", query = "SELECT ts FROM tariff_scale ts WHERE main=TRUE")
+})
+
 public class TariffScale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private BigInteger id;
 
     public BigInteger getId() {
         return id;
     }
 
+    @Column(name="title")
     protected String title;
+    @Column(name="description")
     protected String description;
+    @Column(name="main")
     protected boolean main;
 
     public String getDescription() {

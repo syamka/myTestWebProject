@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>JQgrid-таблицы</title>
+        <title>Настройки</title>
         <script type="text/javascript" src="./js/jquery-1.9.0.min.js"></script>
         <script type="text/javascript" src="./js/i18n/grid.locale-ru.js"></script>
         <script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
@@ -11,8 +11,20 @@
 
         <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css"/>
         <link rel="stylesheet" href="./css/ui.jqgrid.css"/>
-        <style>
+        <style type="text/css">
             .ui-jqgrid .ui-jqgrid-btable { cursor : pointer; }
+            .ui-jqgrid tr.jqgrow td {
+                word-wrap: break-word; /* IE 5.5+ and CSS3 */
+                white-space: pre-wrap; /* CSS3 */
+                white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+                white-space: -pre-wrap; /* Opera 4-6 */
+                white-space: -o-pre-wrap; /* Opera 7 */
+                overflow: hidden;
+                height: auto;
+                vertical-align: middle;
+                padding-top: 3px;
+                padding-bottom: 3px
+            }
         </style>
     </head>
     <body>
@@ -146,15 +158,13 @@
                     url: TARIFF_SCALES_URL + "/list",
                     colNames:['ID', 'Название', 'Описание', 'Главная'],
                     colModel:[
-                        {name:'id', align: 'center', width: 100},
+                        {name:'id', align: 'center', width: 50},
                         {name:'title', align: 'center', editable: true},
-                        {name:'description', align: 'left', editable: true, width: 500},
+                        {name:'description', align: 'left', editable: true, width: 500, edittype: "textarea", editoptions: {rows:"6",cols:"100"}},
                         {name:'main', formatter: 'checkbox', align: 'center', width: 100, editable: true, edittype: 'checkbox', editoptions: { value:"true:false" }}
                     ],
                     pager: '#tsNavDiv',
                     viewrecords: true,
-                    pgbuttons: false,
-                    pgtext: null,
                     sortname: 'id',
                     sortorder: 'asc',
                     caption: 'Тарифные сетки',
@@ -168,7 +178,13 @@
                         params.url = TARIFF_SCALES_URL + '/edit/' + postdata.tariffScales_id;
                     },
                     afterSubmit: handleResponse,
-                    reloadAfterSubmit: false
+                    reloadAfterSubmit: false,
+                    width: 600,
+                    height: 230,
+                    beforeShowForm: function (formid)
+                    {
+                        $("#tr_main",formid).show();
+                    }
                 };
                 var addTsOptions = {
                     mtype: "POST",
@@ -176,7 +192,13 @@
                         params.url = TARIFF_SCALES_URL + '/add';
                     },
                     afterSubmit: handleResponse,
-                    reloadAfterSubmit: false
+                    reloadAfterSubmit: false,
+                    width: 600,
+                    height: 230,
+                    beforeShowForm: function (formid)
+                    {
+                        $("#tr_main",formid).hide();
+                    }
                 };
                 var delTsOptions = {
                     onclickSubmit: function(params, postdata) {
@@ -186,7 +208,7 @@
                     reloadAfterSubmit: false
                 };
 
-                jQuery("#tariffScales").jqGrid('navGrid',"#tsNavDiv",{edit:true,add:true,del:true,search:false, refresh:false},editTsOptions, addTsOptions, delTsOptions);
+                jQuery("#tariffScales").jqGrid('navGrid',"#tsNavDiv",{edit:true,add:true,del:true,search:false, refresh:true},editTsOptions, addTsOptions, delTsOptions);
 
             })
 
