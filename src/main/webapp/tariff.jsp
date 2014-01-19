@@ -14,6 +14,7 @@
 <head>
     <title><%=tariffScale.getTitle()%></title>
     <script type="text/javascript" src="./js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.js"></script>
     <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css"/>
 </head>
 <body>
@@ -25,35 +26,56 @@
         Этот кусок есть компонент поиска тарифа. Его нужно будет инкапсулировать в отдельную jsp или типа того
     --%>
     <script>
+
+        function initRegions(){
+            $.ajax({
+                url: "rest/region/list",
+                dataType: "json",
+                data: {},
+                success: function(data){
+
+                    $( "input[name='region']" ).autocomplete("option","source",
+                        $.map(data.rows, function(item){
+                            return {
+                                label: item.title,
+                                value: item.title,
+                                id: item.id
+                            }
+                        }));
+                }
+            })
+        }
+
+        function initCities(region_id){
+            $.ajax({
+                url: "rest/region/" + region_id + "/city/list",
+                dataType: "json",
+                data: {},
+                success: function(data){
+
+                    $( "input[name='city']" ).autocomplete("option","source",
+                            $.map(data.rows, function(item){
+                                return {
+                                    label: item.title,
+                                    value: item.title,
+                                    id: item.id
+                                }
+                            }));
+                }
+            })
+        }
+
         $(function() {
-            var availableTags = [
-              "Москва",
-              "Питер",
-              "Asp",
-              "BASIC",
-              "C",
-              "C++",
-              "Clojure",
-              "COBOL",
-              "ColdFusion",
-              "Erlang",
-              "Fortran",
-              "Groovy",
-              "Haskell",
-              "Java",
-              "JavaScript",
-              "Lisp",
-              "Perl",
-              "PHP",
-              "Python",
-              "Ruby",
-              "Scala",
-              "Scheme"
-            ];
             $( "input[name='region']" ).autocomplete({
-              source: availableTags
+                select: function( event, ui ) {
+                    initCities(ui.item.id);
+                }
             });
-          });
+            initRegions();
+            $( "input[name='city']" ).autocomplete();
+
+
+        });
 
     </script>
 
@@ -61,7 +83,17 @@
         <div class="ui-widget-header">Поиск тарифа</div>
         <form>
             <div class="ui-widget">
-                <label>Регион: </label> <input name="region" />
+                <table>
+                    <tr>
+                        <td><label>Регион: </label></td>
+                        <td><input name="region" /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Город: </label></td>
+                        <td><input name="city" /></td>
+                    </tr>
+                </table>
+
             </div>
         </form>
 

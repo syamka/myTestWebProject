@@ -39,19 +39,5 @@ END |
 CREATE TRIGGER `delete_city` BEFORE DELETE ON `cities`
 FOR EACH ROW BEGIN
   DELETE FROM tariff WHERE city_id=OLD.id;
-END/* |
-
-
-DELIMITER |
-CREATE TRIGGER `new_main_ts` AFTER UPDATE ON `tariff_scale`
-FOR EACH ROW
-BEGIN
-  IF (
-      NOT OLD.main=NEW.main
-        AND
-      NEW.main = TRUE
-  )
-  THEN UPDATE `tariff_scale` SET main=FALSE WHERE NOT id=NEW.id;
-  END IF;
-END;*/
+END;
 

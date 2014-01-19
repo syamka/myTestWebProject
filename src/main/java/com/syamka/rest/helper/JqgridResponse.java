@@ -23,11 +23,27 @@ public class JqgridResponse {
 
     public JqgridResponse(UriInfo uriInfo){
         MultivaluedMap<String, String> params =  uriInfo.getQueryParameters();
-        page = Integer.parseInt(params.getFirst("page"));
-        rows = Integer.parseInt(params.getFirst("rows"));
-        sidx = params.getFirst("sidx");
-        sord = params.getFirst("sord");
+
+        int p_page = 1;
+        try{
+            p_page = Integer.parseInt(params.getFirst("page"));
+        }
+        catch (Exception e){}
+
+        //считаем это достаточно большим числом
+        int p_rows = 1000000000;
+        try{
+            p_rows = Integer.parseInt(params.getFirst("rows"));
+        }
+        catch (Exception e){}
+
+        page = p_page;
+        rows = p_rows;
+        sidx = (params.getFirst("sidx") == null)?"":params.getFirst("sidx");
+        sord = (params.getFirst("sord") == null)?"":params.getFirst("sord");
     }
+
+
 
     public int getFirstResult(){
         return getRows() * (getPage() - 1);
